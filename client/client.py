@@ -1,27 +1,14 @@
 import asyncio
-import traceback
+from .Protocall import _4DMinerClientProtocol
 
-import json
+class Client:
+  def __init__(self):
+    self.known_host = None
+    self.id = None
 
-from .JsonClientProto import JsonClientProtocol
-
-
-class _4DMinerClientProtocol(JsonClientProtocol):
-    def handle_bytes(self, data):
-        print(f"Got bytes: b{data!r}")
-
-    def handle_json(self, data):
-        print(f"Got Json {data!r}")
-        self.send_data({"KeepAlive": True})
-
-    def handle_connection_made(self):
-        self.send_data("Hello, World!")
-
-    def handle_connection_removed(self):
-
-        print(f"connection to {self.ip} stoped")
-
-
+  def add_protocall(self, protocall:_4DMinerClientProtocol):
+    self.protocall:_4DMinerClientProtocol = protocall
+    
 async def runclient():
     # Get a reference to the event loop as we plan to use
     # low-level APIs.

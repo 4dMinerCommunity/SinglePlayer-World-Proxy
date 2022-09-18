@@ -1,22 +1,18 @@
-import asyncio
-import traceback
 
-import json
-
-from .JsonServerProto import JsonProtocol, Server
+from .JsonClientProto import JsonClientProtocol
 
 
-class _4DMinerServerProtocol(JsonProtocol):
+class _4DMinerClientProtocol(JsonClientProtocol):
     def handle_bytes(self, data):
         print(f"Got bytes: b{data!r}")
-        self.send_data({"data": data, "KeepAlive": True})
 
     def handle_json(self, data):
         print(f"Got Json {data!r}")
         self.send_data({"KeepAlive": True})
 
     def handle_connection_made(self):
-        pass
+        self.send_data("Hello, World!")
 
     def handle_connection_removed(self):
-        print(f"connection from {self.ip} stoped")
+
+        print(f"connection to {self.ip} stoped")
