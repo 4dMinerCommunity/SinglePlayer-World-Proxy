@@ -5,7 +5,7 @@ import json
 
 from .JsonServerProto import JsonProtocol
 
-from typeing import TYPE_CHECKING
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
   from Server import Server

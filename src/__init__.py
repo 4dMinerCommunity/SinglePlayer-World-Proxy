@@ -3,7 +3,7 @@ import traceback
 
 import json
 
-from .JsonServerProto import Server
+
 from .Protocall import _4DMinerServerProtocol
 from .Server import Server
 

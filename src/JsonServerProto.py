@@ -2,7 +2,7 @@ import asyncio
 import traceback
 
 import json
-from typeing import TYPE_CHECKING
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
   from Server import Server
