@@ -2,15 +2,10 @@ import asyncio
 import traceback
 
 import json
+from typeing import TYPE_CHECKING
 
-
-class Server:
-    def __init__(self):
-        self.cons = {}
-        self.currently_connected: set = set([])
-
-    def add_server(self, server):
-        self.server = server
+if TYPE_CHECKING:
+  from Server import Server
 
 
 class JsonProtocol(asyncio.Protocol):
