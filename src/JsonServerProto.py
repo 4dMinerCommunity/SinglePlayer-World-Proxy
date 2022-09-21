@@ -49,7 +49,7 @@ class JsonProtocol(asyncio.Protocol):
         )
 
     def send_data(self, sendback):
-        if type(sendback) == dict:
+        if type(sendback) is dict:
             if "type" in sendback.keys():
                 if type == "bytes":
                     ret = sendback["data"]
