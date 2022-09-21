@@ -16,6 +16,9 @@ class Server:
         self.users = self.db.pull("Users")
 
         self.CurrentWorldHost: int = None
+        """
+          Current Client World Host Server ID
+        """
 
     def add_server(self, server: AbstractServer):
         self.server: AbstractServer = server
@@ -55,7 +58,7 @@ class Server:
                 "Users",
                 {"ID": id, "IP": str(client.ip), "x": 0, "y": 100, "z": 0, "w": 0},
             )
-        usr = self.db.pull_where("Users", f"{str(client.ip)} is IP")
+        usr = self.db.pull_where("Users", f"{str(client.ip)} = IP")
         self.connected[usr.id] = {"client": client}
 
     def move(self, val, client):
@@ -70,11 +73,19 @@ class Server:
                 {"KeepAlive": True, "type": "Error", "val": client.Codes["BadRequest"]}
             )
             return
-        usr = self.db.pull_where("Users", f"{client.id} IS ID")
+        usr = self.db.pull_where("Users", f"{client.id} = ID")
         del usr["IP"]
         self.connected[self.CurrentWorldHost]["client"].send_data(
             {"KeepAlive": True, "type": "Command", "command": "GetMapFor", "val": usr}
         )
+
+        self.send_to_all({
+          "KeepAlive":True,
+          "type":"Command",
+          "Command":"Update_player",
+          "val":usr
+        })
+        
 
     def host_return_map(self, val, client):
         if not (set(["ID", "MAP"]) - grades.keys()):
@@ -87,7 +98,22 @@ class Server:
           "KeepAlive":True,
           "type":"Command",
           "Command":"UpdateMap",
-          "val":val["MAP"]
+          "val": val["MAP"]
         })
         
         
+  def update_map(self, val, client):
+    """
+    Updates the map for Client host and also sends it to all clients
+    """
+    self.send_to_all({
+      "KeepAlive":True,
+      "type":"Command",
+      "Command":"Update_map",
+      "val": val
+    })
+
+    
+    self.connected[self.CurrentWorldHost]["client"].send_data(
+          {"KeepAlive": True, "type": "Command", "command": "SaveMap", "val": val}
+    )
