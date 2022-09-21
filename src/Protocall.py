@@ -34,11 +34,16 @@ class _4DMinerServerProtocol(JsonProtocol):
 
         # Checking all of the data for cmds, and stuff like that
         try:
-            assert "val" in data.keys()
-            assert "type" in data.keys()
+            if "val" not in data.keys():
+                raise AssertionError
+            if "type" not in data.keys():
+                raise AssertionError
 
-            if data["type"] == "command":
-                assert "command" in data.keys()
+            if (
+                data["type"] == "command"
+                and "command" not in data.keys()
+            ):
+                raise AssertionError
 
         except AssertionError:
             self.send_data(
