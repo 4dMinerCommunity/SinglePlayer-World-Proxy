@@ -131,3 +131,6 @@ dmypy.json
 # replit
 *replit*
 *.nix
+
+# db
+*.db

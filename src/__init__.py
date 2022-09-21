@@ -7,6 +7,7 @@ import json
 from .Protocall import _4DMinerServerProtocol
 from .Server import Server
 
+
 async def _make_and_run():
     # Get a reference to the event loop as we plan to use
     # low-level APIs.
@@ -14,9 +15,7 @@ async def _make_and_run():
 
     server = Server()
     Clients = await loop.create_server(
-        lambda: _4DMinerServerProtocol(server),
-        "127.0.0.1",
-        8888
+        lambda: _4DMinerServerProtocol(server), "127.0.0.1", 8888
     )
 
     server.add_server(Clients)
