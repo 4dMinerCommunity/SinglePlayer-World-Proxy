@@ -39,9 +39,11 @@ class _4DMinerServerProtocol(JsonProtocol):
             if "type" not in data.keys():
                 raise AssertionError
 
-            if data["type"] == "command":
-                if "command" not in data.keys():
-                    raise AssertionError
+            if (
+                data["type"] == "command"
+                and "command" not in data.keys()
+            ):
+                raise AssertionError
 
         except AssertionError:
             self.send_data(
