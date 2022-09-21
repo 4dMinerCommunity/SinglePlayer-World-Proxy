@@ -2,30 +2,21 @@ import asyncio
 import traceback
 
 import json
-from typeing import TYPE_CHECKING
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-  from Server import Server
+    from Server import Server
 
 
 class JsonProtocol(asyncio.Protocol):
     def __init__(self, server):
         self.server: Server = server
+        self.waiting = False
 
     def connection_made(self, transport):
         peername = transport.get_extra_info("peername")
         print("Connection from {}".format(peername))
         self.transport = transport
-
-        self.id = len(self.server.cons.keys())
-        self.server.cons[self.id] = {
-            "id": self.id,
-            "proto": self,
-            "trans": self.transport,
-            "ip": peername,
-        }
-        self.server.currently_connected.add(self.id)
-        self.continue_for_bytes = False
 
         self.ip = peername
         self.handle_connection_made()
