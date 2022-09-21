@@ -1,14 +1,17 @@
 import asyncio
+
 from .Protocall import _4DMinerClientProtocol
 
-class Client:
-  def __init__(self):
-    self.known_host = None
-    self.id = None
 
-  def add_protocall(self, protocall:_4DMinerClientProtocol):
-    self.protocall:_4DMinerClientProtocol = protocall
-    
+class Client:
+    def __init__(self):
+        self.known_host = None
+        self.id = None
+
+    def add_protocall(self, protocall: _4DMinerClientProtocol):
+        self.protocall: _4DMinerClientProtocol = protocall
+
+
 async def runclient():
     # Get a reference to the event loop as we plan to use
     # low-level APIs.

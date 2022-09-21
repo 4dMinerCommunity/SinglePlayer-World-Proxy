@@ -1,8 +1,6 @@
 import asyncio
-import traceback
-
 import json
-
+import traceback
 
 from .Protocall import _4DMinerServerProtocol
 from .Server import Server
