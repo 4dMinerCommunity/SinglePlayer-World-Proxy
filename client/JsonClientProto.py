@@ -1,7 +1,6 @@
 import asyncio
-import traceback
-
 import json
+import traceback
 
 
 class JsonClientProtocol(asyncio.Protocol):

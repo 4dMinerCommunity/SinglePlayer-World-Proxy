@@ -1,11 +1,9 @@
 import asyncio
-import traceback
-
 import json
+import traceback
+from typing import TYPE_CHECKING
 
 from .JsonServerProto import JsonProtocol
-
-from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from Server import Server
@@ -25,7 +23,7 @@ class _4DMinerServerProtocol(JsonProtocol):
     }
 
     def handle_bytes(self, data):
-        
+
         print(f"Got bytes: b{data!r}")
         self.send_data({"data": data, "KeepAlive": True})
 
@@ -39,10 +37,7 @@ class _4DMinerServerProtocol(JsonProtocol):
             if "type" not in data.keys():
                 raise AssertionError
 
-            if (
-                data["type"] == "command"
-                and "command" not in data.keys()
-            ):
+            if data["type"] == "command" and "command" not in data.keys():
                 raise AssertionError
 
         except AssertionError:
